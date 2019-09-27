@@ -19,3 +19,12 @@ variable "ec2" {
 variable "s3_destination" {
   default = "telegraph-rudder-client-s3-destination"
 }
+
+variable "custom_vpc" {
+  type = "map"
+
+  default = {
+    vpc_id    = ""
+    subnet_id = ""
+  }
+}
