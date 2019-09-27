@@ -27,7 +27,9 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 3. Clone this repo
 
-4. Change the S3 bucket name in `variables.tf`, bucket names are global scoped. If you get a conflict, you might have to use a different bucket name. You can also update EC2 type (default volume type is gp2), volume size (default volume size is 100GB), etc in the `variables.tf`
+4. Change the S3 bucket name in `variables.tf`, bucket names are global scoped. 
+Change the `prefix` in `variables.tf`, if needed. 
+If you get a conflict, you might have to use a different bucket name. You can also update EC2 type (default volume type is gp2), volume size (default volume size is 100GB), etc in the `variables.tf`
 
 5. `terraform init`
 
