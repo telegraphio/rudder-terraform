@@ -20,7 +20,7 @@ https://www.terraform.io/downloads.html
 
 2. The AWS resources that we create is 1 EC2 key pair, 1 EC2 instance, 1 S3 bucket, 2 security groups (to open 22, 8080 ports) 1 IAM role and corresponding policy.
 
-2. Create a SSH keypair. Store in any location (preferably in `id_rsa_tf`, otherwise update new location in `variables.tf`)
+2. Create a SSH keypair. Store in any location (preferably in `~.ssh/id_rsa_tf`, otherwise update new location in `variables.tf`)
 ```
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
