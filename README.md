@@ -1,6 +1,4 @@
-#### Rudder server infra set-up guide
-
----
+### Rudder server infra set-up guide
 
 This document assumes you have Terraform installed on your machine and you can configure the AWS CLI credentials.
 Please refer to the following documents if needed.
