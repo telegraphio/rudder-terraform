@@ -18,7 +18,7 @@ https://www.terraform.io/downloads.html
 
 1. Create an AWS user with Administrator access and save your credentials in `~/.aws/credentials`. These credentials are only used by Terraform. We don't need Administrator access but it is easy to setup.
 
-2. The AWS resources that we create is 1 EC2 instance, 1 S3 bucket, 2 security groups (to open 22, 8080 ports) 1 IAM role and corresponding policy.
+2. The AWS resources that we create is 1 EC2 key pair, 1 EC2 instance, 1 S3 bucket, 2 security groups (to open 22, 8080 ports) 1 IAM role and corresponding policy.
 
 2. Create a SSH keypair. Store in any location (preferably in `id_rsa_tf`, otherwise update new location in `variables.tf`)
 ```
@@ -27,7 +27,7 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 3. Clone this repo
 
-4. Change the S3 bucket name in `variables.tf`, bucket names are global scoped. If you get a conflict, you might have to use a different bucket name. You can also update EC2 type, volume size etc in the `variables.tf`
+4. Change the S3 bucket name in `variables.tf`, bucket names are global scoped. If you get a conflict, you might have to use a different bucket name. You can also update EC2 type (default volume type is gp2), volume size (default volume size is 100GB), etc in the `variables.tf`
 
 5. `terraform init`
 
