@@ -59,7 +59,7 @@ http://<instance_ip>:8080/v1/batch
 
 ### Test your setup
 
-1. Save your event data in a JSON file, say `event.json`
+1. Save your event data in a JSON file, say `event.json` (A sample `event.json` has been included in the repo)
 
 2. Make the following curl request to send an event
 ```
