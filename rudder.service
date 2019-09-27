@@ -1,0 +1,18 @@
+[Unit]
+Description = Setting up Rudder Server
+After = network.target
+
+[Service]
+Environment=CONFIG_PATH=/home/ubuntu/rudder-server/config.toml
+WorkingDirectory = /home/ubuntu/rudder-server
+Restart = on-failure
+RestartSec = 3s
+StartLimitInterval = 0
+ExecStart = /home/ubuntu/rudder-server/rudder-server
+StandardOutput = syslog
+StandardError = syslog
+SyslogIdentifier = rudder
+User = ubuntu
+
+[Install]
+WantedBy = multi-user.target
