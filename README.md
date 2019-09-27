@@ -11,7 +11,7 @@ https://www.terraform.io/downloads.html
 
 1. Go to the [dashboard](https://app.rudderlabs.com) `https://app.rudderlabs.com` and set up your account. Copy your workspace token from top of the home page.
 2. Replace `<your_workspace_token>` in `dataplane.env` with the above token.
-3. Configure a new source and get the source key
+3. Configure a new source and get the `<source_write_key>`. The source_write_key will be used later in basic auth for sending events.
 
 ### Non-Default VPC
 
@@ -63,7 +63,7 @@ http://<instance_ip>:8080/v1/batch
 
 2. Make the following curl request to send an event
 ```
-curl -u <source_key>: -X POST http://<instance_ip>:8080/v1/track -d @event.json --header "Content-Type: application/json"
+curl -u <source_write_key>: -X POST http://<instance_ip>:8080/v1/track -d @event.json --header "Content-Type: application/json"
 ```
 
 
