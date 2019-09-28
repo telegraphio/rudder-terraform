@@ -44,7 +44,7 @@ resource "aws_iam_policy" "ec2_policy" {
                 "s3:Put*"
             ],
             "Effect": "Allow",
-            "Resource": "arn:aws:s3:::${var.s3_destination}/*"
+            "Resource": "arn:aws:s3:::*"
         }
     ]
 }
