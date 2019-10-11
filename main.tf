@@ -103,12 +103,6 @@ resource "aws_instance" "rudder" {
     source      = "./rudder.service"
     destination = "/home/ubuntu/rudder.service"
   }
-
-  provisioner "file" {
-    source      = "./user-transformer.service"
-    destination = "/home/ubuntu/user-transformer.service"
-  }
-
   provisioner "file" {
     source      = "./dest-transformer.service"
     destination = "/home/ubuntu/dest-transformer.service"
@@ -127,7 +121,6 @@ resource "aws_instance" "rudder" {
       "unzip rudder-transformer.zip",
       "npm install",
       "chmod +x /home/ubuntu/rudder-server/rudder-server",
-      "sudo systemctl restart user-transformer",
       "sudo systemctl restart dest-transformer",
       "sudo systemctl restart rudder"
     ]
