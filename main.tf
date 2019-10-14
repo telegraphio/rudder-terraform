@@ -117,6 +117,8 @@ resource "aws_instance" "rudder" {
       "sudo bash /home/ubuntu/install.sh",
       "sudo cp /home/ubuntu/*.service /etc/systemd/system/",
       "sudo systemctl daemon-reload",
+      "sudo systemctl enable rudder",
+      "sudo systemctl enable dest-transformer",
       "cd /home/ubuntu/rudder-transformer",
       "unzip rudder-transformer.zip",
       "npm install",
