@@ -9,7 +9,7 @@ mkdir rudder-server-tmp
 curl -s https://api.github.com/repos/rudderlabs/rudder-server/releases/latest \
 | grep "browser_download_url.*_Linux_x86_64.tar.gz" \
 | cut -d : -f 2,3 \
-| tr -d \" \
+| tr -d \", \
 | xargs curl -sL \
 | tar xz -C rudder-server-tmp
 
@@ -26,7 +26,7 @@ echo "Latest rudder-transformer release is ${LATEST_TRANSFORMER_RELEASE}"
 curl -s https://api.github.com/repos/rudderlabs/rudder-transformer/releases/latest \
 | grep "zipball_url.*" \
 | cut -d : -f 2,3 \
-| tr -d \" \
-| xargs curl -Lo rudder-transformer.zip
+| tr -d \", \
+| xargs curl -sLo rudder-transformer.zip
 
 echo -e "Downloaded rudder-transformer ${LATEST_TRANSFORMER_RELEASE}\n"
