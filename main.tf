@@ -125,6 +125,8 @@ resource "aws_instance" "rudder" {
       "sudo systemctl enable dest-transformer",
       "cd /home/ubuntu/rudder-transformer",
       "unzip rudder-transformer.zip",
+      "cp -R rudderlabs-rudder-transformer-*/* .",
+      "rm rudder-transformer.zip",
       "npm install",
       "chmod +x /home/ubuntu/rudder-server/rudder-server",
       "sudo systemctl restart dest-transformer",
