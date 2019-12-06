@@ -6,7 +6,7 @@ provider "aws" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = "${var.prefix}_rudder_deployer"
-  public_key = "${file("${var.ec2.private_key_path}.pub")}"
+  public_key = file("${var.ec2.private_key_path}.pub")
 }
 
 resource "aws_security_group" "allow_ssh" {
@@ -48,25 +48,25 @@ resource "aws_security_group" "allow_server" {
 }
 
 resource "aws_instance" "rudder" {
-  ami                  = "${var.ec2.ami}"
-  instance_type        = "${var.ec2.instance_type}"
-  key_name             = "${aws_key_pair.deployer.key_name}"
-  iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.id}"
+  ami                  = var.ec2.ami
+  instance_type        = var.ec2.instance_type
+  key_name             = aws_key_pair.deployer.key_name
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.id
 
   tags = {
     Name = "rudder"
   }
   vpc_security_group_ids = [
-    "${aws_security_group.allow_ssh.id}",
-    "${aws_security_group.allow_server.id}"
+    aws_security_group.allow_ssh.id,
+    aws_security_group.allow_server.id
   ]
 
   connection {
-    host        = "${self.public_ip}"
+    host        = self.public_ip
     type        = "ssh"
     user        = "ubuntu"
     password    = ""
-    private_key = "${file("${var.ec2.private_key_path}")}"
+    private_key = file(var.ec2.private_key_path)
   }
 
   provisioner "remote-exec" {
@@ -134,5 +134,5 @@ resource "aws_instance" "rudder" {
 }
 
 output "instance_ip" {
-  value = "${aws_instance.rudder.public_ip}"
+  value = aws_instance.rudder.public_ip
 }
