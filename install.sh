@@ -21,6 +21,8 @@ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 apt-get -y install nodejs
 npm install -g pm2
 
+apt-get -y install python make g++
+
 chown -R ubuntu:ubuntu ~/.npm
 
 
