@@ -79,6 +79,10 @@ resource "aws_instance" "rudder" {
     ]
   }
 
+  provisioner "local-exec" {
+    command = "./fetch_latest_releases.sh"
+  }
+
   provisioner "file" {
     source      = "./rudder-server"
     destination = "/home/ubuntu/rudder-server/rudder-server"
