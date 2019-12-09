@@ -8,7 +8,7 @@ variable "prefix" {
 }
 
 variable "ec2" {
-  type = "map"
+  type = map(string)
 
   default = {
     "ami"              = "ami-0cfee17793b08a293"
