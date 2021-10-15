@@ -1,7 +1,20 @@
 provider "aws" {
-  version = "~> 2.0"
-  profile = "default"
-  region  = "us-east-1"
+  profile = "telegraph"
+  region  = "us-east-2"
+}
+
+terraform {
+  required_providers {
+    aws = {
+      version = "~> 2.0"
+    }
+  }
+  backend "s3" {
+    bucket  = "telegraph-terraform-staging"
+    key     = "rudderstack/terraform.tfstate"
+    region  = "us-east-2"
+    profile = "telegraph"
+  }
 }
 
 resource "aws_key_pair" "deployer" {
