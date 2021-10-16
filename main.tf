@@ -17,6 +17,18 @@ terraform {
   }
 }
 
+resource "aws_eip" "rudderstack_eip" {
+  vpc = true
+  tags = {
+    Terraform = "true",
+    Name      = "Rudderstack EIP"
+  }
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.rudder.id
+  allocation_id = aws_eip.rudderstack_eip.id
+}
 resource "aws_key_pair" "deployer" {
   key_name   = "${var.prefix}_rudder_deployer"
   public_key = file("${var.ec2.private_key_path}.pub")
@@ -46,8 +58,8 @@ resource "aws_security_group" "allow_server" {
   description = "Allow SSH inbound traffic"
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -129,6 +141,17 @@ resource "aws_instance" "rudder" {
     source      = "./install.sh"
     destination = "/home/ubuntu/install.sh"
   }
+
+  provisioner "file" {
+    source      = "./rs.telegraph.io.crt"
+    destination = "/home/ubuntu/rs.telegraph.io.crt"
+  }
+
+  provisioner "file" {
+    source      = "./rs.telegraph.io.key"
+    destination = "/home/ubuntu/rs.telegraph.io.key"
+  }
+  
   provisioner "remote-exec" {
     inline = [
       "sudo bash /home/ubuntu/install.sh",
@@ -151,3 +174,8 @@ resource "aws_instance" "rudder" {
 output "instance_ip" {
   value = aws_instance.rudder.public_ip
 }
+
+output "elastic_ip" {
+  value = aws_eip.rudderstack_eip.public_ip
+}
+

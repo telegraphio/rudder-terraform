@@ -11,7 +11,7 @@ variable "ec2" {
   type = map(string)
 
   default = {
-    "ami"              = "ami-01685d240b8fbbfeb"
+    "ami"              = "ami-0e5e17317f99b2932"
     "instance_type"    = "t3.small"
     "private_key_path" = "~/.ssh/id_rsa_tf"
   }
