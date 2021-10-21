@@ -21,10 +21,10 @@ variable "s3_destination" {
 }
 
 variable "custom_vpc" {
-  type = "map"
+  type = map(string)
 
   default = {
-    vpc_id    = ""
-    subnet_id = ""
+    vpc_id    = "vpc-0b40d4474e5cccd7c"
+    subnet_id = "subnet-0b18c384db566fe54"
   }
 }

@@ -30,11 +30,11 @@ resource "aws_eip_association" "eip_assoc" {
   allocation_id = aws_eip.rudderstack_eip.id
 }
 data "aws_vpc" "main" {
-  id = "${var.custom_vpc.vpc_id}"
+  id = var.custom_vpc.vpc_id
 }
 
 data "aws_subnet" "main" {
-  id = "${var.custom_vpc.subnet_id}"
+  id = var.custom_vpc.subnet_id
 }
 
 resource "aws_key_pair" "deployer" {
@@ -45,7 +45,7 @@ resource "aws_key_pair" "deployer" {
 resource "aws_security_group" "allow_ssh" {
   name        = "${var.prefix}_allow_ssh"
   description = "Allow SSH inbound traffic"
-  vpc_id      = "${data.aws_vpc.main.id}"
+  vpc_id      = data.aws_vpc.main.id
 
   ingress {
     from_port   = 22
@@ -65,7 +65,7 @@ resource "aws_security_group" "allow_ssh" {
 resource "aws_security_group" "allow_server" {
   name        = "${var.prefix}_allow_server"
   description = "Allow SSH inbound traffic"
-  vpc_id      = "${data.aws_vpc.main.id}"
+  vpc_id      = data.aws_vpc.main.id
   ingress {
     from_port   = 443
     to_port     = 443
@@ -86,7 +86,7 @@ resource "aws_instance" "rudder" {
   instance_type        = var.ec2.instance_type
   key_name             = aws_key_pair.deployer.key_name
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.id
-  subnet_id            = "${data.aws_subnet.main.id}"
+  subnet_id            = data.aws_subnet.main.id
 
   tags = {
     Name = "rudder"
@@ -153,20 +153,21 @@ resource "aws_instance" "rudder" {
   }
 
   provisioner "file" {
-    source      = "./rs.telegraph.io.crt"
+    source      = "../certs/rs.telegraph.io.crt"
     destination = "/home/ubuntu/rs.telegraph.io.crt"
   }
 
   provisioner "file" {
-    source      = "./rs.telegraph.io.key"
+    source      = "../certs/rs.telegraph.io.key"
     destination = "/home/ubuntu/rs.telegraph.io.key"
   }
-  
+
   provisioner "remote-exec" {
     inline = [
       "sudo bash /home/ubuntu/install.sh",
       "sudo cp /home/ubuntu/*.service /etc/systemd/system/",
       "sudo systemctl daemon-reload",
+      "sudo systemctl enable nginx",
       "sudo systemctl enable rudder",
       "sudo systemctl enable dest-transformer",
       "cd /home/ubuntu/rudder-transformer",
@@ -175,6 +176,7 @@ resource "aws_instance" "rudder" {
       "rm rudder-transformer.zip",
       "npm install",
       "chmod +x /home/ubuntu/rudder-server/rudder-server",
+      "sudo systemctl restart nginx",
       "sudo systemctl restart dest-transformer",
       "sudo systemctl restart rudder"
     ]
