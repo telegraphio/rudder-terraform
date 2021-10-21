@@ -4,6 +4,7 @@ After = network.target
 
 [Service]
 Environment=CONFIG_PATH=/home/ubuntu/rudder-server/config.toml
+EnvironmentFile=-/home/ubuntu/rudder-server/.env
 WorkingDirectory = /home/ubuntu/rudder-server
 Restart = on-failure
 RestartSec = 3s
